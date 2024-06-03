@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
+<div class="mt-2">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="{% url "catagory" %}">View</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url "add_category" %}">Add</a>
+    </li>
+  </ul>
+</div>
+
+<div class="w-50 m-auto mt-2">
+  {% if form %}
+  <form method="post">{% csrf_token %} {{ form | crispy }} <input class="btn btn-primary" type="submit" value="Submit"/></form>
+  {% endif %}
+
+  {% if categories %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+  {% for category in categories %}
+      <tr>
+        <th scope="row">{{category.id}}</th>
+        <td>{{category.name}}</td>
+        <td><button class="btn btn-danger">Delete</button></td>
+      </tr>    
+  {% endfor %}
+  </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %} {% block title %}{{'Category'}}{% endblock %}
